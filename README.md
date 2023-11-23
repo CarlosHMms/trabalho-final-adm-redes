@@ -10,48 +10,52 @@
 
 - Vagrant
 - Docker
+- VirtualBox
 
 ### Imagens Docker Utilizadas
 
-- docker bla bla bla bla
-- bla bla bla bla
-- bla vla lba abla
-- dracarys
+- [Imagem DHCP](https://hub.docker.com/r/networkboot/dhcpd)
+- [Imagem FTP](https://hub.docker.com/r/ustclug/ftp)
+- [Imagem NFS](https://hub.docker.com/r/openebs/nfs-server-alpine)
+- [Imagem HTTP](https://hub.docker.com/_/httpd)
+- [Imagem DNS]()
+
+### Box Vagrant Utilizada
+
+- [ubuntu/focal64](https://app.vagrantup.com/ubuntu/boxes/focal64)
 
 ### Funcionamento
 
-Para que o usuário consiga rodar o projeto, ele deverá clonar este repositório em seu computador e ter instalado na sua máquina os seguintes programas:
+Para que o usuário consiga rodar o projeto, ele deverá clonar este repositório em seu computador e ter instalado na sua máquina as seguintes ferramentas:
 
 - Vagrant
 - Docker
 - Composer
+- VirtualBox
 
-Para instalar você deverá rodar no **terminal Linux** os seguintes comandos:
+Para instalar as ferramentas você deverá rodar no seu **terminal Linux** os seguintes comandos:
 
 ```shell
-sudo su
-apt-get install -y vagrant docker composer docker-composer
+sudo apt-get install -y vagrant docker composer docker-composer virtualbox
 ```
 
-```Ruby
-Vagrant.configure("2") do |config|
+E depois executar os seguintes comandos para procurar possiveis atualizações nas ferramentas:
 
-# VM 1
-  config.vm.box = "ubuntu/focal64"
-
-  config.vm.provider "virtualbox" do |vb|
-    vb.memory = 2048
-    vb.cpus = 2
-  end
-  config.vm.define "vm1" do |virtual|
-
-    virtual.vm.network "private_network", ip: "192.168.56.1"
-
-    virtual.vm.synced_folder "./config_archives", "/vm_config"
-
-    virtual.vm.provision "shell", path: "./config_archives/cfgs/instalacao.sh"
-
-    virtual.vm.hostname = "VirtualMachine"
-  end
-end
+```shell
+sudo apt update
+sudo apt upgrade -y
 ```
+
+### Topologias e Estruturas Utilizadas
+
+- A máquina virtual principal (VM1) será configurada com o ip privado 192.168.56.2 com a seguinte máscara de sub-rede 255.255.255.254/24
+
+- O primeiro container docker que será criado é um container que proverá serviços DHCP. O container receberá um arquivo [dhcp.conf]() contendo as devidas configurações para o serviço. Também, o container será vinculado a porta 67/udp da **vm1**.
+
+- O segundo container irá provisionar um serviço FTP que permitirá que exista transferencia de arquivos na rede.
+
+- O terceiro será um conteiner NFS que irá permitir a transferência de diretorios na rede, semelhante ao serviço FTP
+
+- O quarto será um conteiner apache que irá hospedar sites internos permitindo o acesso por todos na rede.
+
+- Por último um servidor DNS para resolver os nomes de dominio dentro da rede.
