@@ -46,16 +46,50 @@ sudo apt update
 sudo apt upgrade -y
 ```
 
-### Topologias e Estruturas Utilizadas
+### Estruturação das VMs
 
-- A máquina virtual principal (VM1) será configurada com o ip privado 192.168.56.2 com a seguinte máscara de sub-rede 255.255.255.254/24
+- vm1
+  - Esta máquina virtual irá hospedar todos os serviços listados anteriormente.
+  - A ela é atribuido o IP 192.168.56.2.
+- vmTeste
+  - Já esta máquina virtual servirá apenas para realizar os devidos testes a cada serviço oferecido pela vm1. O ip dela será atribuido pelo serviço DHCP da vm1.
 
-- O primeiro container docker que será criado é um container que proverá serviços DHCP. O container receberá um arquivo [dhcp.conf]() contendo as devidas configurações para o serviço. Também, o container será vinculado a porta 67/udp da **vm1**.
+### Topologias, Estruturas Utilizadas e Funcionamento dos Serviços
 
-- O segundo container irá provisionar um serviço FTP que permitirá que exista transferencia de arquivos na rede.
+- A máquina virtual principal (VM1) será configurada com o ip privado 192.168.56.2 com a seguinte máscara de sub-rede 255.255.255.254/24, será por esse ip que será possivel acessar os serviços FTP
+
+- O primeiro container docker que será criado é um container que proverá serviços DHCP. O container receberá um arquivo [dhcp.conf]() contendo as devidas configurações para o serviço. Também, o container será vinculado a porta 67/udp da **vm1** e será por ela o servidor DHCP atribuirá o ip para novas maquinas que aparecerem na rede.
+
+- O segundo container irá provisionar um serviço FTP que permitirá que exista transferencia de arquivos na rede. O serviço ira utilizar por padrão a porta 21 e reservar o algumas como da 47400 até a 47470.
 
 - O terceiro será um conteiner NFS que irá permitir a transferência de diretorios na rede, semelhante ao serviço FTP
 
 - O quarto será um conteiner apache que irá hospedar sites internos permitindo o acesso por todos na rede.
 
 - Por último um servidor DNS para resolver os nomes de dominio dentro da rede.
+
+### Testes e resultados
+
+- Os serviços foram testados na seguinte sequência
+
+  - DHCP
+  - DNS
+  - FTP
+  - NFS
+  - Servidor WEB Apache
+
+- #### DHCP
+
+  - Para testar o servidor DHCP podemos apenas adicionar uma nova máquina à rede, assim esperamos que o nosso serviço implementado cuide de atribuir um novo IP a essa máquina.
+
+- #### DNS
+
+  -
+
+- #### FTP
+
+  -
+
+- #### NFS
+
+  -
