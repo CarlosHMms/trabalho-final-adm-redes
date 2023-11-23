@@ -1,0 +1,13 @@
+version: '3'
+services:
+  nfs-server:
+    image: openebs/nfs-server-alpine
+    restart: always
+    privileged: true
+    volumes:
+      - /home/matheus/VsCode/VAGRANT_FINAL/trabalho-final-adm-redes:/export
+      - ./nfs_conf.sh:/etc/entrypoint.sh
+    environment:
+      - SHARED_DIRECTORY=/export
+    ports:
+      - "2049:2049"
