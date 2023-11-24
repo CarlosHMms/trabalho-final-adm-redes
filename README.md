@@ -46,6 +46,12 @@ sudo apt update
 sudo apt upgrade -y
 ```
 
+Com as ferramentas devidamente instaladas basta executar o comando:
+
+```shell
+vagrant up
+```
+
 ### Estruturação das VMs
 
 - vm1
@@ -84,11 +90,23 @@ sudo apt upgrade -y
 
 - #### DNS
 
-  -
+  - Para testar o serviço DNS você terá que se conectar na vmTeste e realizar o comando:
+
+  ```shell
+  dig www.example.com
+  ```
+
+  - E terá que receber como retorno o ip relacionado a esse endereço de dominio
 
 - #### FTP
 
-  -
+  - Para testar o serviço FTP, na sua máquina você deverá executar o seguinte comando no console
+
+  ```shell
+  ftp 192.168.56.2
+  ```
+
+  - Quando pedir usuário digite `kkazin` e a senha: `kkazin`. Se a conexão for estabelecida, você poderá utilizar o comando `put` para adicionar um arquivo e `get` para fazer o download deste arquivo.
 
 - #### NFS
 

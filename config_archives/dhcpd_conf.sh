@@ -20,4 +20,4 @@ subnet 192.168.56.0 netmask 255.255.255.0 {
   option broadcast-address 192.168.56.255;
 }' > dhcpd.conf
 
-sudo docker run -d --volume /home/vagrant:/data --name dhcp_server --net host --restart always networkboot/dhcpd
+sudo docker run -d --net host --volume /home/vagrant:/data --name dhcp_server --restart always networkboot/dhcpd

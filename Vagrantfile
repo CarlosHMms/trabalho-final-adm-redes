@@ -17,9 +17,10 @@ Vagrant.configure("2") do |config|
     virtual.vm.network "private_network", ip: "192.168.56.2"
     virtual.vm.network "forwarded_port", guest: 80, host: 8081, host_ip: "192.168.56.2"
     
+    
     #configuração nfs
-    virtual.vm.synced_folder ".", "/trabalho-final-adm-redes", type: "nfs", mount_options: ['nolock','udp']
-    virtual.vm.synced_folder "shared_folder/www", "/www"
+    #virtual.vm.synced_folder ".", "/trabalho-final-adm-redes", type: "nfs", mount_options: ['nolock','udp']
+    virtual.vm.synced_folder "shared_folder/www", "/www" 
     
     #virtual.vm.synced_folder "./shared_folder/", "/shared_folder"
 
@@ -28,11 +29,6 @@ Vagrant.configure("2") do |config|
     virtual.vm.provision "shell", path: "./config_archives/nfs_conf.sh"
     virtual.vm.provision "shell", path: "./config_archives/dns_resolver.sh"
     virtual.vm.provision "shell", path: "./config_archives/apache.sh"
-
-    virtual.vm.provision "shell", inline: <<-SHELL
-      cd /config_archives
-      docker-compose up -d
-    SHELL
 
     virtual.vm.hostname = "VirtualMachine"
   end
@@ -49,7 +45,7 @@ Vagrant.configure("2") do |config|
 
     virtual.vm.network "private_network", type: "dhcp"
     
-    virtual.vm.provision "shell", path: "./config_archives/vmcliente.sh"
+    virtual.vm.provision "shell", path: "config_archives/vmcliente.sh"
 
     virtual.vm.hostname = "MaquinaTeste"
   end
