@@ -46,7 +46,7 @@ sudo apt update
 sudo apt upgrade -y
 ```
 
-Com as ferramentas devidamente instaladas basta executar o comando estando dentro da [pasta principal](/trabralho-final-adm-redes):
+Com as ferramentas devidamente instaladas basta executar o comando estando dentro da [pasta principal](../trabralho-final-adm-redes):
 
 ```shell
 vagrant up
