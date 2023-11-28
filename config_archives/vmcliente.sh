@@ -1,2 +1,2 @@
-apt-get update
-apt-get install -y net-tools
+apt update
+apt install -y net-tools

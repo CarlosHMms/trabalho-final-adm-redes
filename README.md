@@ -108,6 +108,16 @@ vagrant up
 
   - Quando pedir usuário digite `kkazin` e a senha: `kkazin`. Se a conexão for estabelecida, você poderá utilizar o comando `put` para adicionar um arquivo e `get` para fazer o download deste arquivo.
 
+- #### Servidor WEB Apache
+
+  - Para testar o servidor web apache, basta, na `vm1` ou na máquina host executar o seguinte comando
+
+  ```shell
+  wget 192.168.56.2:8080
+  ```
+
+  - Após o comando será baixado um arquivo index.html exibindo uma mensagem escrita "It Works !"
+
 - #### NFS
 
   -
