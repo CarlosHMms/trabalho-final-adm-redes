@@ -38,14 +38,10 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.memory = 2048
     vb.cpus = 2
-    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
   end
   config.vm.define "vmTeste" do |virtual|
 
     virtual.vm.network "private_network", type: "dhcp"
-    
-    virtual.vm.provision "shell", path: "config_archives/vmcliente.sh"
 
     virtual.vm.hostname = "MaquinaTeste"
   end

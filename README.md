@@ -15,10 +15,10 @@
 ### Imagens Docker Utilizadas
 
 - [Imagem DHCP](https://hub.docker.com/r/networkboot/dhcpd)
-- [Imagem FTP](https://hub.docker.com/r/ustclug/ftp)
+- [Imagem FTP](https://hub.docker.com/r/bogem/ftp)
 - [Imagem NFS](https://hub.docker.com/r/openebs/nfs-server-alpine)
 - [Imagem HTTP](https://hub.docker.com/_/httpd)
-- [Imagem DNS]()
+- [Imagem DNS](https://hub.docker.com/r/coredns/coredns)
 
 ### Box Vagrant Utilizada
 
@@ -46,11 +46,13 @@ sudo apt update
 sudo apt upgrade -y
 ```
 
-Com as ferramentas devidamente instaladas basta executar o comando estando dentro da [pasta principal](./):
+Com as ferramentas devidamente instaladas basta executar o comando abaixo estando dentro da [pasta principal](./) clonada (trabalho-final-adm-redes):
 
 ```shell
 vagrant up
 ```
+
+Espera-se que as vms sejam criadas e devidamente configuradas sem a presença de erros. Após a criação você pode utilizar o comando **vagrant status** para verificar se as Vms estão ligadas e funcionando
 
 ### Estruturação das VMs
 
@@ -66,13 +68,15 @@ vagrant up
 
 - O primeiro container docker que será criado é um container que proverá serviços DHCP. O container receberá um arquivo [dhcp.conf](./config_archives/dhcpd_conf.sh) contendo as devidas configurações para o serviço. Também, o container será vinculado a porta 67/udp da **vm1** e será por ela o servidor DHCP atribuirá o ip para novas maquinas que aparecerem na rede.
 
-- O segundo container irá provisionar um serviço FTP que permitirá que exista transferencia de arquivos na rede. O serviço ira utilizar por padrão a porta 21 e reservar o algumas como da 47400 até a 47470.
+- O segundo container irá provisionar um serviço FTP que permitirá que exista transferencia de arquivos na rede por todos nela presente. O serviço ira utilizar por padrão a porta 21 e reservar o algumas como da 47400 até a 47470.
 
-- O terceiro será um conteiner NFS que irá permitir a transferência de diretorios na rede, semelhante ao serviço FTP
+- O terceiro será um conteiner NFS que irá permitir a transferência de diretorios na rede, semelhante ao serviço FTP.
 
 - O quarto será um conteiner apache que irá hospedar sites internos permitindo o acesso por todos na rede.
 
 - Por último um servidor DNS para resolver os nomes de dominio dentro da rede.
+
+- **Todos estes conteiners apresentados acima serão hospedados na VM1**
 
 ### Testes e resultados
 
@@ -86,27 +90,32 @@ vagrant up
 
 - #### DHCP
 
-  - Para testar o servidor DHCP podemos apenas adicionar uma nova máquina à rede, assim esperamos que o nosso serviço implementado cuide de atribuir um novo IP a essa máquina.
+  - Para testar o servidor DHCP podemos apenas adicionar uma nova máquina à rede, assim esperamos que o nosso serviço implementado, através de um pedido feito pela nova máquina forneça um novo ip à máquina.
+
+    ![Teste DHCP](images/image.png)
 
 - #### DNS
 
-  - Para testar o serviço DNS você terá que se conectar na vmTeste e realizar o comando:
+  - Para testar o serviço DNS você terá que se conectar na vmTeste ou em qualquer outra e realizar o comando:
 
   ```shell
   dig www.example.com
   ```
 
-  - E terá que receber como retorno o ip relacionado a esse endereço de dominio
+  - E terá que receber como retorno o ip relacionado a esse endereço de dominio como mostrado na figura abaixo:
+
+    ![Teste DNS](images/image2.png)
 
 - #### FTP
 
   - Para testar o serviço FTP, na sua máquina você deverá executar o seguinte comando no console
 
   ```shell
-  ftp 192.168.56.2
+  ftp 192.168.56.2 21
   ```
 
   - Quando pedir usuário digite `kkazin` e a senha: `kkazin`. Se a conexão for estabelecida, você poderá utilizar o comando `put` para adicionar um arquivo e `get` para fazer o download deste arquivo.
+    ![FTP Teste](images/image4.png)
 
 - #### Servidor WEB Apache
 
@@ -117,6 +126,7 @@ vagrant up
   ```
 
   - Após o comando será baixado um arquivo index.html exibindo uma mensagem escrita "It Works !"
+    ![Apache Teste](images/image3.png)
 
 - #### NFS
 
