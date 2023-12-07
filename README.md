@@ -46,6 +46,8 @@ sudo apt update
 sudo apt upgrade -y
 ```
 
+Após realizar a instalação das ferramentas, abra o virtualbox digitanto `virtualbox` no terminal e exclua quaisquer resquicios de outras máquinas virtuais e outros serviços de rede.
+
 Com as ferramentas devidamente instaladas basta executar o comando abaixo estando dentro da [pasta principal](./) clonada (trabalho-final-adm-redes):
 
 ```shell
@@ -58,13 +60,13 @@ Espera-se que as vms sejam criadas e devidamente configuradas sem a presença de
 
 - vm1
   - Esta máquina virtual irá hospedar todos os serviços listados anteriormente.
-  - A ela é atribuido o IP 192.168.56.2.
+  - A ela é atribuido o IP 192.168.56.3.
 - vmTeste
   - Já esta máquina virtual servirá apenas para realizar os devidos testes a cada serviço oferecido pela vm1. O ip dela será atribuido pelo serviço DHCP da vm1.
 
 ### Topologias, Estruturas Utilizadas e Funcionamento dos Serviços
 
-- A máquina virtual principal (VM1) será configurada com o ip privado 192.168.56.2 com a seguinte máscara de sub-rede 255.255.255.254/24, será por esse ip que será possivel acessar os serviços FTP
+- A máquina virtual principal (VM1) será configurada com o ip privado 192.168.56.3 com a seguinte máscara de sub-rede 255.255.255.254/24, será por esse ip que será possivel acessar os serviços FTP
 
 - O primeiro container docker que será criado é um container que proverá serviços DHCP. O container receberá um arquivo [dhcp.conf](./config_archives/dhcpd_conf.sh) contendo as devidas configurações para o serviço. Também, o container será vinculado a porta 67/udp da **vm1** e será por ela o servidor DHCP atribuirá o ip para novas maquinas que aparecerem na rede.
 
@@ -108,21 +110,21 @@ Espera-se que as vms sejam criadas e devidamente configuradas sem a presença de
 
 - #### FTP
 
-  - Para testar o serviço FTP, na sua máquina você deverá executar o seguinte comando no console
+  - Para testar o serviço FTP, na máquina teste (vmTeste) você deverá executar o seguinte comando no terminal:
 
   ```shell
-  ftp 192.168.56.2 21
+  ftp 192.168.56.3
   ```
 
-  - Quando pedir usuário digite `kkazin` e a senha: `kkazin`. Se a conexão for estabelecida, você poderá utilizar o comando `put` para adicionar um arquivo e `get` para fazer o download deste arquivo.
+  - Quando pedir usuário digite: `kkazin` e a senha: `kkazin`. Se a conexão for estabelecida, você poderá utilizar o comando `put` para adicionar um arquivo e `get` para fazer o download deste arquivo em outra máquina conectada à sessão ftp.
     ![FTP Teste](images/image4.png)
 
 - #### Servidor WEB Apache
 
-  - Para testar o servidor web apache, basta, na `vm1` ou na máquina host executar o seguinte comando
+  - Para testar o servidor web apache, basta, na `vmTeste` executar o seguinte comando:
 
   ```shell
-  wget 192.168.56.2:8080
+  wget 192.168.56.3:8080
   ```
 
   - Após o comando será baixado um arquivo index.html exibindo uma mensagem escrita "It Works !"

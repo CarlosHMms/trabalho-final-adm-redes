@@ -14,8 +14,8 @@ max-lease-time 7200;
 authoritative;
 
 subnet 192.168.56.0 netmask 255.255.255.0 {
-  range 192.168.56.1 192.168.56.254;
-  option routers 192.168.56.2;
+  range 192.168.56.1 192.168.56.100;
+  option routers 192.168.56.3;
   option subnet-mask 255.255.255.0;
   option broadcast-address 192.168.56.255;
 }' > dhcpd.conf

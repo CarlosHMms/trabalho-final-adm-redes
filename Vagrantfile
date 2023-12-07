@@ -14,8 +14,8 @@ Vagrant.configure("2") do |config|
   end
   config.vm.define "vm1" do |virtual|
     
-    virtual.vm.network "private_network", ip: "192.168.56.2"
-    virtual.vm.network "forwarded_port", guest: 80, host: 8081, host_ip: "192.168.56.2"
+    virtual.vm.network "private_network", ip: "192.168.56.3"
+    virtual.vm.network "forwarded_port", guest: 80, host: 8081, host_ip: "192.168.56.3"
     
     
     #configuração nfs
